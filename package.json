@@ -1,0 +1,13 @@
+{
+  "name": "playwright-ng-schematics",
+  "version": "0.0.1",
+  "description": "Playwright Angular schematics",
+  "keywords": [
+    "angular",
+    "playwright",
+    "schematics"
+  ],
+  "scripts": {
+  },
+  "license": "Apache-2.0"
+}

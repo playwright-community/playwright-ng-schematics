@@ -2,13 +2,35 @@
   "name": "playwright-ng-schematics",
   "version": "0.0.2",
   "description": "Playwright Angular schematics",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "postbuild": "cpy src/**/*.json src/**/files/**/* lib",
+    "test": "vitest",
+    "test:ci": "vitest run --coverage"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jfgreffier/playwright-ng-schematics.git"
+  },
+  "license": "Apache-2.0",
   "keywords": [
     "angular",
     "playwright",
     "schematics"
   ],
-  "scripts": {
-    "test": "exit 0"
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "@vitest/coverage-v8": "^1.6.0",
+    "cpy-cli": "^5.0.0",
+    "typescript": "^5.5.3",
+    "vitest": "^1.6.0"
   },
-  "license": "Apache-2.0"
+  "schematics": "./lib/collection.json",
+  "dependencies": {
+    "@angular-devkit/core": "^18.0.6",
+    "@angular-devkit/schematics": "^18.0.6"
+  }
 }

@@ -1,0 +1,10 @@
+{
+  "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "e2e": {
+      "description": "Creates a single test file",
+      "factory": "./e2e/index",
+      "schema": "./e2e/schema.json"
+    }
+  }
+}

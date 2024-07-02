@@ -16,7 +16,7 @@ npm run e2e
 ## Create a test file
 
 Create a new empty test
-```
+```bash
 ng generate playwright-ng-schematics:e2e "<TestName>"
 ```
 

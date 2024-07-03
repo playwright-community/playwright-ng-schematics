@@ -1,6 +1,11 @@
 {
   "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
   "schematics": {
+    "ng-add": {
+      "description": "Adds Playwright Test to your Angular project",
+      "factory": "./ng-add/index",
+      "schema": "./ng-add/schema.json"
+    },
     "install-browsers": {
       "description": "Install Browsers",
       "factory": "./install-browsers/index"

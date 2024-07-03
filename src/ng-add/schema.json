@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "Playwright",
+  "title": "Playwright ng-add Schema",
+  "type": "object",
+  "properties": {
+    "installBrowsers": {
+      "type": "boolean",
+      "default": false,
+      "x-prompt": "Install Playwright browsers (can be done manually via 'npx playwright install')?"
+    }
+  },
+  "required": []
+}

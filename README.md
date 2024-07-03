@@ -1,6 +1,6 @@
 # Playwright Angular Schematic
 
-Adds [Playwright](https://playwright.dev/) tests to your Angular project.
+Adds [Playwright Test](https://playwright.dev/) to your Angular project 
 
 ## Add Playwright to your Angular project
 

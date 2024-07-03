@@ -1,6 +1,10 @@
 {
   "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
   "schematics": {
+    "install-browsers": {
+      "description": "Install Browsers",
+      "factory": "./install-browsers/index"
+    },
     "e2e": {
       "description": "Creates a single test file",
       "factory": "./e2e/index",

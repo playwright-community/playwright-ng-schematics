@@ -22,6 +22,7 @@
     "schematics"
   ],
   "devDependencies": {
+    "@biomejs/biome": "^1.8.3",
     "@schematics/angular": "18.0.7",
     "@types/node": "^20.14.9",
     "@vitest/coverage-v8": "^1.6.0",

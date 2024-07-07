@@ -1,0 +1,16 @@
+{
+  "files": {
+    "ignore": ["lib/**"]
+  },
+  "formatter": {
+    "indentStyle": "space"
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single"
+    }
+  },
+  "linter": {
+    "ignore": ["src/*/files/**/*"]
+  }
+}

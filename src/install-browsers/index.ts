@@ -1,7 +1,7 @@
 import { spawnSync } from 'node:child_process';
 import type { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 
-export function installBrowsers(_options: any): Rule {
+export function installBrowsers(): Rule {
   return (tree: Tree, context: SchematicContext) => {
     context.logger.info('Install browsers');
 

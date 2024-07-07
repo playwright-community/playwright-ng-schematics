@@ -15,7 +15,7 @@ import {
 
 // You don't have to export the function as default. You can also have more than one rule factory
 // per file.
-export default function ngAdd(options: any): Rule {
+export default function ngAdd(options: { installBrowsers: boolean }): Rule {
   return (tree: Tree, context: SchematicContext) => {
     const copyFiles = mergeWith(apply(url('./files'), [move('.')]));
     const rules = [addNpmScript, gitignore, copyFiles, addPlaywright];
@@ -72,7 +72,7 @@ function addPackageToPackageJson(
   }
   context.logger.info('Adjust package.json');
 
-  const sourceText = tree.read('package.json')!.toString('utf-8');
+  const sourceText = tree.readText('package.json');
   const json = JSON.parse(sourceText);
   if (!json.devDependencies) {
     json.devDependencies = {};

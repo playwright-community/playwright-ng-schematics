@@ -28,7 +28,7 @@ describe('ng-add', () => {
     const tree = await runner.runSchematic('ng-add', {}, appTree);
 
     const packageJSON = JSON.parse(tree.readContent('/package.json'));
-    expect(packageJSON.scripts['e2e']).toBe('playwright test');
+    expect(packageJSON.scripts.e2e).toBe('playwright test');
   });
 
   it('should update .gitignore', async () => {

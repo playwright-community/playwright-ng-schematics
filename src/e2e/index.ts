@@ -13,8 +13,8 @@ import {
 
 // You don't have to export the function as default. You can also have more than one rule factory
 // per file.
-export default function e2e(_options: any): Rule {
-  const name = _options.name;
+export default function e2e(options: { name: string }): Rule {
+  const name = options.name;
   return (tree: Tree, _context: SchematicContext) => {
     const templateSource = apply(url('./files'), [
       applyTemplates({ classify, name, dasherize }),

@@ -1,13 +1,13 @@
-import { Rule, Tree, SchematicContext } from "@angular-devkit/schematics";
-import { spawnSync } from "child_process";
+import { Rule, Tree, SchematicContext } from '@angular-devkit/schematics';
+import { spawnSync } from 'child_process';
 
 export function installBrowsers(_options: any): Rule {
   return (tree: Tree, context: SchematicContext) => {
-    context.logger.info("Install browsers");
+    context.logger.info('Install browsers');
 
-    spawnSync("npx playwright install", [], {
+    spawnSync('npx playwright install', [], {
       cwd: process.cwd(),
-      stdio: "inherit",
+      stdio: 'inherit',
       shell: true,
     });
 

@@ -1,5 +1,6 @@
 import { classify, dasherize } from '@angular-devkit/core/src/utils/strings';
 import {
+  url,
   type Rule,
   type SchematicContext,
   type Tree,
@@ -8,7 +9,6 @@ import {
   chain,
   mergeWith,
   move,
-  url,
 } from '@angular-devkit/schematics';
 
 // You don't have to export the function as default. You can also have more than one rule factory

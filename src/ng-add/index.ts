@@ -1,4 +1,5 @@
 import {
+  url,
   type Rule,
   type SchematicContext,
   type Tree,
@@ -6,7 +7,6 @@ import {
   chain,
   mergeWith,
   move,
-  url,
 } from '@angular-devkit/schematics';
 import {
   NodePackageInstallTask,

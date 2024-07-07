@@ -1,7 +1,7 @@
 import {
-  Rule,
-  SchematicContext,
-  Tree,
+  type Rule,
+  type SchematicContext,
+  type Tree,
   apply,
   chain,
   mergeWith,

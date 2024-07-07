@@ -1,8 +1,8 @@
 import {
   SchematicTestRunner,
-  UnitTestTree,
+  type UnitTestTree,
 } from '@angular-devkit/schematics/testing';
-import * as path from 'path';
+import * as path from 'node:path';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 describe('ng-add', () => {

@@ -1,8 +1,8 @@
 import { classify, dasherize } from '@angular-devkit/core/src/utils/strings';
 import {
-  Rule,
-  SchematicContext,
-  Tree,
+  type Rule,
+  type SchematicContext,
+  type Tree,
   apply,
   applyTemplates,
   chain,

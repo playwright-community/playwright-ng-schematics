@@ -1,6 +1,6 @@
 {
   "name": "playwright-ng-schematics",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Playwright Angular schematics",
   "scripts": {
     "build": "tsc -p tsconfig.json",
@@ -10,13 +10,19 @@
     "test": "vitest",
     "test:ci": "vitest run --coverage"
   },
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/jfgreffier/playwright-ng-schematics.git"
   },
   "license": "Apache-2.0",
-  "keywords": ["angular", "playwright", "schematics"],
+  "keywords": [
+    "angular",
+    "playwright",
+    "schematics"
+  ],
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
     "@schematics/angular": "18.0.7",

@@ -1,7 +1,4 @@
 {
-  "files": {
-    "ignore": ["lib/**"]
-  },
   "formatter": {
     "indentStyle": "space"
   },
@@ -12,5 +9,10 @@
   },
   "linter": {
     "ignore": ["src/*/files/**/*"]
+  },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
   }
 }

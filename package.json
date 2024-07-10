@@ -5,6 +5,8 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "postbuild": "cpy src/**/*.json src/**/files/**/* lib",
+    "lint": "biome ci",
+    "lint:fix": "biome check --write",
     "test": "vitest",
     "test:ci": "vitest run --coverage"
   },

@@ -1,9 +1,8 @@
-import * as path from 'node:path';
 import { Tree } from '@angular-devkit/schematics';
 import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
 import { describe, expect, it } from 'vitest';
 
-const collectionPath = path.join(__dirname, '../../lib/collection.json');
+const collectionPath = 'lib/schematics/collection.json';
 
 describe('e2e', () => {
   it('should generate spec file', async () => {

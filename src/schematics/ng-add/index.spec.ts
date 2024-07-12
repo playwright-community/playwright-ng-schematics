@@ -1,15 +1,13 @@
-import * as path from 'node:path';
 import {
   SchematicTestRunner,
   type UnitTestTree,
 } from '@angular-devkit/schematics/testing';
 import { beforeEach, describe, expect, it } from 'vitest';
 
+const collectionPath = 'lib/schematics/collection.json';
+
 describe('ng-add', () => {
-  const runner = new SchematicTestRunner(
-    'schematics',
-    path.join(__dirname, '../../lib/collection.json'),
-  );
+  const runner = new SchematicTestRunner('schematics', collectionPath);
   let appTree: UnitTestTree;
 
   beforeEach(async () => {

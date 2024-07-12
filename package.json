@@ -32,9 +32,9 @@
     "typescript": "^5.5.3",
     "vitest": "^1.6.0"
   },
-  "schematics": "./lib/collection.json",
   "dependencies": {
     "@angular-devkit/core": "^18.0.6",
     "@angular-devkit/schematics": "^18.0.6"
-  }
+  },
+  "schematics": "./lib/schematics/collection.json"
 }

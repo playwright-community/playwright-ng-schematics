@@ -24,7 +24,7 @@ export default function ngAdd(options: { installBrowsers: boolean }): Rule {
       addPlaywright,
     ];
     if (options.installBrowsers) {
-      context.addTask(new RunSchematicTask('install', {}));
+      context.addTask(new RunSchematicTask('install-browsers', {}));
     }
     return chain(rules)(tree, context);
   };

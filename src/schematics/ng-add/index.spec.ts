@@ -22,11 +22,20 @@ describe('ng-add', () => {
     );
   });
 
+  it('should add "e2e" to angular', async () => {
+    const tree = await runner.runSchematic('ng-add', {}, appTree);
+
+    const angularJSON = JSON.parse(tree.readContent('/angular.json'));
+    expect(angularJSON.projects.sandbox.architect.e2e.builder).toBe(
+      'playwright-ng-schematics:playwright',
+    );
+  });
+
   it('should add npm script', async () => {
     const tree = await runner.runSchematic('ng-add', {}, appTree);
 
     const packageJSON = JSON.parse(tree.readContent('/package.json'));
-    expect(packageJSON.scripts.e2e).toBe('playwright test');
+    expect(packageJSON.scripts.e2e).toBe('ng e2e');
   });
 
   it('should update .gitignore', async () => {

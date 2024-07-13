@@ -18,7 +18,13 @@ import {
 export default function ngAdd(options: { installBrowsers: boolean }): Rule {
   return (tree: Tree, context: SchematicContext) => {
     const copyFiles = mergeWith(apply(url('./files'), [move('.')]));
-    const rules = [addNpmScript, gitignore, copyFiles, addPlaywright];
+    const rules = [
+      updateAngular,
+      addNpmScript,
+      gitignore,
+      copyFiles,
+      addPlaywright,
+    ];
     if (options.installBrowsers) {
       context.addTask(new RunSchematicTask('install', {}));
     }
@@ -26,12 +32,30 @@ export default function ngAdd(options: { installBrowsers: boolean }): Rule {
   };
 }
 
+function updateAngular(tree: Tree, context: SchematicContext) {
+  if (!tree.exists('angular.json')) {
+    return tree;
+  }
+  context.logger.info('angular.json');
+
+  const sourceText = tree.readText('angular.json');
+  const json = JSON.parse(sourceText);
+  for (const projectName of Object.keys(json.projects)) {
+    json.projects[projectName].architect.e2e = {
+      builder: 'playwright-ng-schematics:playwright',
+    };
+  }
+  tree.overwrite('angular.json', JSON.stringify(json, null, 2));
+
+  return tree;
+}
+
 function addNpmScript(tree: Tree, context: SchematicContext) {
   context.logger.info('npm script');
 
   if (tree.exists('package.json')) {
     const key = 'e2e';
-    const value = 'playwright test';
+    const value = 'ng e2e';
 
     const sourceText = tree.readText('package.json');
     const json = JSON.parse(sourceText);

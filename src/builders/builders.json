@@ -1,0 +1,10 @@
+{
+  "$schema": "../../node_modules/@angular-devkit/architect/src/builders-schema.json",
+  "builders": {
+    "playwright": {
+      "implementation": "./playwright",
+      "schema": "./playwright/schema.json",
+      "description": "Run Playwright Test"
+    }
+  }
+}

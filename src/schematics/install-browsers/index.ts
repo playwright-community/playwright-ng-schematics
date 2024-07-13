@@ -3,7 +3,7 @@ import type { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 
 export default function installBrowsers(): Rule {
   return (tree: Tree, context: SchematicContext) => {
-    context.logger.info('Install browsers');
+    context.logger.info('Installing browsers...');
 
     spawnSync('npx playwright install', [], {
       cwd: process.cwd(),

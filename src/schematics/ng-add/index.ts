@@ -34,7 +34,7 @@ function updateAngular(tree: Tree, context: SchematicContext) {
   if (!tree.exists('angular.json')) {
     return tree;
   }
-  context.logger.info('angular.json');
+  context.logger.debug('angular.json');
 
   const sourceText = tree.readText('angular.json');
   const json = JSON.parse(sourceText);
@@ -52,7 +52,7 @@ function addNpmScript(tree: Tree, context: SchematicContext) {
   if (!tree.exists('package.json')) {
     return tree;
   }
-  context.logger.info('npm script');
+  context.logger.debug('npm script');
 
   const key = 'e2e';
   const value = 'ng e2e';
@@ -71,7 +71,7 @@ function gitignore(tree: Tree, context: SchematicContext) {
   if (!tree.exists('.gitignore')) {
     return tree;
   }
-  context.logger.info('Adjust .gitignore');
+  context.logger.debug('Adjust .gitignore');
 
   const content = tree.readText('.gitignore');
   const modifiedContent = `${content}
@@ -94,7 +94,7 @@ function addPackageToPackageJson(
   if (!tree.exists('package.json')) {
     return tree;
   }
-  context.logger.info('Adjust package.json');
+  context.logger.debug('Adjust package.json');
 
   const sourceText = tree.readText('package.json');
   const json = JSON.parse(sourceText);

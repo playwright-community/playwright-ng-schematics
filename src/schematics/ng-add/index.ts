@@ -13,8 +13,6 @@ import {
   RunSchematicTask,
 } from '@angular-devkit/schematics/tasks';
 
-// You don't have to export the function as default. You can also have more than one rule factory
-// per file.
 export default function ngAdd(options: { installBrowsers: boolean }): Rule {
   return (tree: Tree, context: SchematicContext) => {
     const copyFiles = mergeWith(apply(url('./files'), [move('.')]));
@@ -51,19 +49,21 @@ function updateAngular(tree: Tree, context: SchematicContext) {
 }
 
 function addNpmScript(tree: Tree, context: SchematicContext) {
+  if (!tree.exists('package.json')) {
+    return tree;
+  }
   context.logger.info('npm script');
 
-  if (tree.exists('package.json')) {
-    const key = 'e2e';
-    const value = 'ng e2e';
+  const key = 'e2e';
+  const value = 'ng e2e';
 
-    const sourceText = tree.readText('package.json');
-    const json = JSON.parse(sourceText);
-    if (!json.scripts[key]) {
-      json.scripts[key] = value;
-    }
-    tree.overwrite('package.json', JSON.stringify(json, null, 2));
+  const sourceText = tree.readText('package.json');
+  const json = JSON.parse(sourceText);
+  if (!json.scripts[key]) {
+    json.scripts[key] = value;
   }
+  tree.overwrite('package.json', JSON.stringify(json, null, 2));
+
   return tree;
 }
 

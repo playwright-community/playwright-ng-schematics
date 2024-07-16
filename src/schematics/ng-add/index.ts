@@ -13,6 +13,8 @@ import {
   RunSchematicTask,
 } from '@angular-devkit/schematics/tasks';
 
+const PLAYWRIGHT_TEST_VERSION = '1.45.2';
+
 export default function ngAdd(options: { installBrowsers: boolean }): Rule {
   return (tree: Tree, context: SchematicContext) => {
     const copyFiles = mergeWith(apply(url('./files'), [move('.')]));
@@ -114,5 +116,5 @@ function addPlaywright(tree: Tree, context: SchematicContext) {
 
   context.addTask(new NodePackageInstallTask({ allowScripts: true }));
 
-  return addPackageToPackageJson(tree, context, '@playwright/test', 'latest');
+  return addPackageToPackageJson(tree, context, '@playwright/test', PLAYWRIGHT_TEST_VERSION);
 }

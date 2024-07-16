@@ -116,5 +116,10 @@ function addPlaywright(tree: Tree, context: SchematicContext) {
 
   context.addTask(new NodePackageInstallTask({ allowScripts: true }));
 
-  return addPackageToPackageJson(tree, context, '@playwright/test', PLAYWRIGHT_TEST_VERSION);
+  return addPackageToPackageJson(
+    tree,
+    context,
+    '@playwright/test',
+    PLAYWRIGHT_TEST_VERSION,
+  );
 }

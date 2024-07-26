@@ -106,6 +106,7 @@ function addPackageToPackageJson(
   if (!json.devDependencies[pkg]) {
     json.devDependencies[pkg] = version;
   }
+  json.devDependencies = sortObjectByKeys(json.devDependencies);
   tree.overwrite('package.json', JSON.stringify(json, null, 2));
 
   return tree;
@@ -122,4 +123,18 @@ function addPlaywright(tree: Tree, context: SchematicContext) {
     '@playwright/test',
     PLAYWRIGHT_TEST_VERSION,
   );
+}
+
+function sortObjectByKeys(
+  obj: Record<string, unknown>,
+): Record<string, unknown> {
+  return Object.keys(obj)
+    .sort()
+    .reduce((result, key) => {
+      return {
+        // biome-ignore lint/performance/noAccumulatingSpread: small object, no perf cost
+        ...result,
+        [key]: obj[key],
+      };
+    }, {});
 }

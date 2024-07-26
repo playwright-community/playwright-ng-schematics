@@ -38,5 +38,8 @@
     "@angular-devkit/schematics": "^18.0.6"
   },
   "builders": "./lib/builders/builders.json",
-  "schematics": "./lib/schematics/collection.json"
+  "schematics": "./lib/schematics/collection.json",
+  "ng-add": {
+    "save": "devDependencies"
+  }
 }

@@ -53,5 +53,9 @@ describe('ng-add', () => {
 
     const packageJSON = JSON.parse(tree.readContent('/package.json'));
     expect(packageJSON.devDependencies['@playwright/test']).toBeTruthy();
+    // check that the dependency is added in the correct place
+    expect(Object.keys(packageJSON.devDependencies)).toEqual(
+      Object.keys(packageJSON.devDependencies).sort(),
+    );
   });
 });

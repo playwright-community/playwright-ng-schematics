@@ -13,8 +13,6 @@ import {
   RunSchematicTask,
 } from '@angular-devkit/schematics/tasks';
 
-const PLAYWRIGHT_TEST_VERSION = '1.45.2';
-
 export default function ngAdd(options: { installBrowsers: boolean }): Rule {
   return (tree: Tree, context: SchematicContext) => {
     const copyFiles = mergeWith(apply(url('./files'), [move('.')]));
@@ -87,42 +85,53 @@ function gitignore(tree: Tree, context: SchematicContext) {
   return tree;
 }
 
+async function getLatestNpmVersion(packageName: string) {
+  try {
+    const response = await fetch(`https://registry.npmjs.org/${packageName}`);
+    const responseObject = await response.json();
+    const version = responseObject['dist-tags'].latest ?? 'latest';
+    return version;
+  } catch (error) {
+    return 'latest';
+  }
+}
+
 function addPackageToPackageJson(
   tree: Tree,
   context: SchematicContext,
   pkg: string,
   version: string,
-): Tree {
-  if (!tree.exists('package.json')) {
+): Rule {
+  return () => {
+    if (!tree.exists('package.json')) {
+      return tree;
+    }
+    context.logger.debug('Adjust package.json');
+
+    const sourceText = tree.readText('package.json');
+    const json = JSON.parse(sourceText);
+    if (!json.devDependencies) {
+      json.devDependencies = {};
+    }
+    if (!json.devDependencies[pkg]) {
+      json.devDependencies[pkg] = version;
+    }
+    json.devDependencies = sortObjectByKeys(json.devDependencies);
+    tree.overwrite('package.json', JSON.stringify(json, null, 2));
+
     return tree;
-  }
-  context.logger.debug('Adjust package.json');
-
-  const sourceText = tree.readText('package.json');
-  const json = JSON.parse(sourceText);
-  if (!json.devDependencies) {
-    json.devDependencies = {};
-  }
-  if (!json.devDependencies[pkg]) {
-    json.devDependencies[pkg] = version;
-  }
-  json.devDependencies = sortObjectByKeys(json.devDependencies);
-  tree.overwrite('package.json', JSON.stringify(json, null, 2));
-
-  return tree;
+  };
 }
 
-function addPlaywright(tree: Tree, context: SchematicContext) {
+async function addPlaywright(tree: Tree, context: SchematicContext) {
   context.logger.debug('Updating dependencies...');
+  const version = await getLatestNpmVersion('@playwright/test');
+
+  context.logger.info(`Adding @playwright/test ${version}`);
 
   context.addTask(new NodePackageInstallTask({ allowScripts: true }));
 
-  return addPackageToPackageJson(
-    tree,
-    context,
-    '@playwright/test',
-    PLAYWRIGHT_TEST_VERSION,
-  );
+  return addPackageToPackageJson(tree, context, '@playwright/test', version);
 }
 
 function sortObjectByKeys(

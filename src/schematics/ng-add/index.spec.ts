@@ -2,12 +2,15 @@ import {
   SchematicTestRunner,
   type UnitTestTree,
 } from '@angular-devkit/schematics/testing';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const collectionPath = 'lib/schematics/collection.json';
 
 describe('ng-add', () => {
   const runner = new SchematicTestRunner('schematics', collectionPath);
+  const npmResponse = vi
+    .fn()
+    .mockResolvedValue({ 'dist-tags': { latest: '1.2.3' } });
   let appTree: UnitTestTree;
 
   beforeEach(async () => {
@@ -23,6 +26,8 @@ describe('ng-add', () => {
   });
 
   it('should add "e2e" to angular', async () => {
+    global.fetch = vi.fn().mockResolvedValueOnce({ json: npmResponse });
+
     const tree = await runner.runSchematic('ng-add', {}, appTree);
 
     const angularJSON = JSON.parse(tree.readContent('/angular.json'));
@@ -32,6 +37,8 @@ describe('ng-add', () => {
   });
 
   it('should add npm script', async () => {
+    global.fetch = vi.fn().mockResolvedValueOnce({ json: npmResponse });
+
     const tree = await runner.runSchematic('ng-add', {}, appTree);
 
     const packageJSON = JSON.parse(tree.readContent('/package.json'));
@@ -39,6 +46,8 @@ describe('ng-add', () => {
   });
 
   it('should update .gitignore', async () => {
+    global.fetch = vi.fn().mockResolvedValueOnce({ json: npmResponse });
+
     const tree = await runner.runSchematic('ng-add', {}, appTree);
 
     const gitignore = tree.readContent('/.gitignore');
@@ -46,16 +55,27 @@ describe('ng-add', () => {
   });
 
   it('should add files and update devDependencies', async () => {
+    global.fetch = vi.fn().mockResolvedValueOnce({ json: npmResponse });
+
     const tree = await runner.runSchematic('ng-add', {}, appTree);
 
     expect(tree.files).toContain('/playwright.config.ts');
     expect(tree.files).toContain('/e2e/example.spec.ts');
 
     const packageJSON = JSON.parse(tree.readContent('/package.json'));
-    expect(packageJSON.devDependencies['@playwright/test']).toBeTruthy();
+    expect(packageJSON.devDependencies['@playwright/test']).toEqual('1.2.3');
     // check that the dependency is added in the correct place
     expect(Object.keys(packageJSON.devDependencies)).toEqual(
       Object.keys(packageJSON.devDependencies).sort(),
     );
+  });
+
+  it(`should install latest if can't fetch version from npm`, async () => {
+    global.fetch = vi.fn().mockRejectedValueOnce({});
+
+    const tree = await runner.runSchematic('ng-add', {}, appTree);
+
+    const packageJSON = JSON.parse(tree.readContent('/package.json'));
+    expect(packageJSON.devDependencies['@playwright/test']).toEqual('latest');
   });
 });

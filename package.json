@@ -20,8 +20,10 @@
   "license": "Apache-2.0",
   "keywords": [
     "angular",
+    "e2e",
     "playwright",
-    "schematics"
+    "schematics",
+    "testing"
   ],
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",

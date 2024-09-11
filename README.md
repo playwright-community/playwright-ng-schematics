@@ -1,5 +1,8 @@
 # Playwright Angular Schematic
 
+![NPM Version](https://img.shields.io/npm/v/playwright-ng-schematics)
+![Playwright version](https://img.shields.io/npm/v/playwright?label=Playwright)
+
 Adds [Playwright Test](https://playwright.dev/) to your Angular project 
 
 ## Add Playwright to your Angular project

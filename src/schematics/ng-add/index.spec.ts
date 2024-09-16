@@ -2,13 +2,12 @@ import {
   SchematicTestRunner,
   type UnitTestTree,
 } from '@angular-devkit/schematics/testing';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const collectionPath = 'lib/schematics/collection.json';
 
 describe('ng-add', () => {
   const runner = new SchematicTestRunner('schematics', collectionPath);
-  const npmResponse = vi
+  const npmResponse = jest
     .fn()
     .mockResolvedValue({ 'dist-tags': { latest: '1.2.3' } });
   let appTree: UnitTestTree;
@@ -26,7 +25,7 @@ describe('ng-add', () => {
   });
 
   it('should add "e2e" to angular', async () => {
-    global.fetch = vi.fn().mockResolvedValueOnce({ json: npmResponse });
+    global.fetch = jest.fn().mockResolvedValueOnce({ json: npmResponse });
 
     const tree = await runner.runSchematic('ng-add', {}, appTree);
 
@@ -37,7 +36,7 @@ describe('ng-add', () => {
   });
 
   it('should add npm script', async () => {
-    global.fetch = vi.fn().mockResolvedValueOnce({ json: npmResponse });
+    global.fetch = jest.fn().mockResolvedValueOnce({ json: npmResponse });
 
     const tree = await runner.runSchematic('ng-add', {}, appTree);
 
@@ -46,7 +45,7 @@ describe('ng-add', () => {
   });
 
   it('should update .gitignore', async () => {
-    global.fetch = vi.fn().mockResolvedValueOnce({ json: npmResponse });
+    global.fetch = jest.fn().mockResolvedValueOnce({ json: npmResponse });
 
     const tree = await runner.runSchematic('ng-add', {}, appTree);
 
@@ -55,7 +54,7 @@ describe('ng-add', () => {
   });
 
   it('should add files and update devDependencies', async () => {
-    global.fetch = vi.fn().mockResolvedValueOnce({ json: npmResponse });
+    global.fetch = jest.fn().mockResolvedValueOnce({ json: npmResponse });
 
     const tree = await runner.runSchematic('ng-add', {}, appTree);
 
@@ -71,7 +70,7 @@ describe('ng-add', () => {
   });
 
   it(`should install latest if can't fetch version from npm`, async () => {
-    global.fetch = vi.fn().mockRejectedValueOnce({});
+    global.fetch = jest.fn().mockRejectedValueOnce({});
 
     const tree = await runner.runSchematic('ng-add', {}, appTree);
 

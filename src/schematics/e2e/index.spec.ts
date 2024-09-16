@@ -1,6 +1,5 @@
 import { Tree } from '@angular-devkit/schematics';
 import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
-import { describe, expect, it } from 'vitest';
 
 const collectionPath = 'lib/schematics/collection.json';
 

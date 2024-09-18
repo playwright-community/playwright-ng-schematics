@@ -11,7 +11,8 @@
     "test:ci": "jest --runInBand"
   },
   "files": [
-    "lib"
+    "lib",
+    "CHANGELOG.md"
   ],
   "repository": {
     "type": "git",

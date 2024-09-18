@@ -30,4 +30,20 @@ describe('Playwright builder', () => {
       expect.anything(),
     );
   });
+
+  it('should accept --ui option', async () => {
+    const run = await architect.scheduleBuilder(
+      'playwright-ng-schematics:playwright',
+      { ui: true },
+    );
+
+    await run.result;
+    await run.stop();
+
+    expect(spawnSync).toHaveBeenCalledWith(
+      'npx playwright test',
+      ['--ui'],
+      expect.anything(),
+    );
+  });
 });

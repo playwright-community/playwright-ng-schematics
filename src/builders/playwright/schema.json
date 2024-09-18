@@ -1,4 +1,31 @@
 {
+  "$schema": "http://json-schema.org/draft-07/schema",
   "title": "Playwright",
-  "description": "Playwright builder options"
+  "description": "Playwright builder options",
+  "type": "object",
+  "properties": {
+    "debug": {
+      "description": "Run tests with Playwright Inspector",
+      "type": "boolean"
+    },
+    "trace": {
+      "description": "Force tracing mode",
+      "enum": [
+        "on",
+        "off",
+        "on-first-retry",
+        "on-all-retries",
+        "retain-on-failure",
+        "retain-on-first-failure"
+      ]
+    },
+    "u": {
+      "description": "Update snapshots with actual results",
+      "type": "boolean"
+    },
+    "ui": {
+      "description": "Run tests in interactive UI mode",
+      "type": "boolean"
+    }
+  }
 }

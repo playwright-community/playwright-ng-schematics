@@ -31,13 +31,13 @@ function buildArgs(options: Options) {
 }
 
 function runE2E(options: Options, _context: BuilderContext): BuilderOutput {
-  spawnSync('npx playwright test', buildArgs(options), {
+  const { status } = spawnSync('npx playwright test', buildArgs(options), {
     cwd: process.cwd(),
     stdio: 'inherit',
     shell: true,
   });
 
-  return { success: true };
+  return { success: status === 0 };
 }
 
 export default createBuilder(runE2E);

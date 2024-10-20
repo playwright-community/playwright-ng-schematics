@@ -1,4 +1,4 @@
-import { spawnSync } from 'node:child_process';
+import { spawn } from 'node:child_process';
 import { join } from 'node:path';
 import { Architect } from '@angular-devkit/architect';
 import { TestingArchitectHost } from '@angular-devkit/architect/testing';
@@ -13,7 +13,9 @@ describe('Playwright builder', () => {
     await architectHost.addBuilderFromPackage(join(__dirname, '../../..'));
     architect = new Architect(architectHost);
 
-    (spawnSync as jest.Mock).mockReturnValue({ status: 0 });
+    (spawn as jest.Mock).mockReturnValue({
+      on: jest.fn((event, callback) => callback(0)),
+    });
   });
 
   it('should spawn testing process', async () => {
@@ -25,7 +27,7 @@ describe('Playwright builder', () => {
     const output = await run.result;
 
     expect(output.success).toBeTruthy();
-    expect(spawnSync).toHaveBeenCalledWith(
+    expect(spawn).toHaveBeenCalledWith(
       'npx playwright test',
       [],
       expect.anything(),
@@ -33,7 +35,9 @@ describe('Playwright builder', () => {
   });
 
   it('should fail on error', async () => {
-    (spawnSync as jest.Mock).mockReturnValue({ status: -3 });
+    (spawn as jest.Mock).mockReturnValue({
+      on: jest.fn((event, callback) => callback(-3)),
+    });
 
     const run = await architect.scheduleBuilder(
       'playwright-ng-schematics:playwright',
@@ -53,7 +57,7 @@ describe('Playwright builder', () => {
     await run.stop();
     const output = await run.result;
 
-    expect(spawnSync).toHaveBeenCalledWith(
+    expect(spawn).toHaveBeenCalledWith(
       'npx playwright test',
       ['--ui'],
       expect.anything(),

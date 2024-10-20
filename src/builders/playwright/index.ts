@@ -1,4 +1,4 @@
-import { spawnSync } from 'node:child_process';
+import { spawn } from 'node:child_process';
 import {
   type BuilderContext,
   type BuilderOutput,
@@ -30,14 +30,33 @@ function buildArgs(options: Options) {
   return args;
 }
 
-function runE2E(options: Options, _context: BuilderContext): BuilderOutput {
-  const { status } = spawnSync('npx playwright test', buildArgs(options), {
-    cwd: process.cwd(),
-    stdio: 'inherit',
-    shell: true,
-  });
+async function startPlaywrightTest(options: Options) {
+  return new Promise((resolve, reject) => {
+    const childPorcess = spawn('npx playwright test', buildArgs(options), {
+      cwd: process.cwd(),
+      stdio: 'inherit',
+      shell: true,
+    });
 
-  return { success: status === 0 };
+    childPorcess.on('exit', (exitCode) => {
+      if (exitCode !== 0) {
+        reject(exitCode);
+      }
+      resolve(true);
+    });
+  });
+}
+
+async function runE2E(
+  options: Options,
+  _context: BuilderContext,
+): Promise<BuilderOutput> {
+  try {
+    await startPlaywrightTest(options);
+    return { success: true };
+  } catch (error) {
+    return { success: false };
+  }
 }
 
 export default createBuilder(runE2E);

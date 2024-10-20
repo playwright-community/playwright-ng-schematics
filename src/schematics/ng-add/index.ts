@@ -41,6 +41,14 @@ function updateAngular(tree: Tree, context: SchematicContext) {
   for (const projectName of Object.keys(json.projects)) {
     json.projects[projectName].architect.e2e = {
       builder: 'playwright-ng-schematics:playwright',
+      options: {
+        devServerTarget: `${projectName}:serve`,
+      },
+      configurations: {
+        production: {
+          devServerTarget: `${projectName}:serve:production`,
+        },
+      },
     };
   }
   tree.overwrite('angular.json', JSON.stringify(json, null, 2));

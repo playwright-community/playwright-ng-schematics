@@ -4,6 +4,10 @@
   "description": "Playwright builder options",
   "type": "object",
   "properties": {
+    "devServerTarget": {
+      "description": "Dev server target to run tests against",
+      "type": "string"
+    },
     "debug": {
       "description": "Run tests with Playwright Inspector",
       "type": "boolean"

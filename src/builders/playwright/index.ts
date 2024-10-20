@@ -2,11 +2,14 @@ import { spawn } from 'node:child_process';
 import {
   type BuilderContext,
   type BuilderOutput,
+  type BuilderRun,
   createBuilder,
+  targetFromTargetString,
 } from '@angular-devkit/architect';
 import type { JsonObject } from '@angular-devkit/core';
 
 interface Options extends JsonObject {
+  devServerTarget: string;
   debug: boolean;
   trace: string;
   'update-snapshots': boolean;
@@ -30,12 +33,33 @@ function buildArgs(options: Options) {
   return args;
 }
 
-async function startPlaywrightTest(options: Options) {
+async function startDevServer(
+  context: BuilderContext,
+  devServerTarget: string,
+): Promise<BuilderRun> {
+  const target = targetFromTargetString(devServerTarget);
+  const server = await context.scheduleTarget(target, {});
+
+  return server;
+}
+
+async function startPlaywrightTest(options: Options, baseURL: string) {
+  // PLAYWRIGHT_TEST_BASE_URL is actually a non-documented env variable used
+  // by Playwright Test.
+  // Its usage in playwright.config.ts is to clarify that it can be overriden.
+  let env = {};
+  if (baseURL) {
+    env = {
+      PLAYWRIGHT_TEST_BASE_URL: baseURL,
+    };
+  }
+
   return new Promise((resolve, reject) => {
     const childPorcess = spawn('npx playwright test', buildArgs(options), {
       cwd: process.cwd(),
       stdio: 'inherit',
       shell: true,
+      env,
     });
 
     childPorcess.on('exit', (exitCode) => {
@@ -49,13 +73,26 @@ async function startPlaywrightTest(options: Options) {
 
 async function runE2E(
   options: Options,
-  _context: BuilderContext,
+  context: BuilderContext,
 ): Promise<BuilderOutput> {
+  let server: BuilderRun | undefined = undefined;
+  let baseURL = '';
+
   try {
-    await startPlaywrightTest(options);
+    if (options.devServerTarget) {
+      server = await startDevServer(context, options.devServerTarget);
+      const result = await server.result;
+      baseURL = result.baseUrl;
+    }
+
+    await startPlaywrightTest(options, baseURL);
     return { success: true };
   } catch (error) {
     return { success: false };
+  } finally {
+    if (server) {
+      server.stop();
+    }
   }
 }
 

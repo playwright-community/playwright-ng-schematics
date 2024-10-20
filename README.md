@@ -29,6 +29,42 @@ ng e2e --ui
 
 For a list of accepted arguments, use `ng e2e --help`. If you need more options and control on the CLI, the best solution is to use `npx playwright test` directly.
 
+### Run an Angular dev server
+If a `devServerTarget` option is specified, the builder will launch an Angular server and will set `PLAYWRIGHT_TEST_BASE_URL` environment variable automatically.
+
+```json title="angular.json"
+        "e2e": {
+          "builder": "playwright-ng-schematics:playwright",
+          "options": {
+            "devServerTarget": "my-app:serve",
+            "ui": true
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "my-app:serve:production"
+            }
+          }
+        }
+```
+
+You still can make use of Playwright's `baseURL` option and mix it with `PLAYWRIGHT_TEST_BASE_URL` env variable.  
+The example below has projects using `PLAYWRIGHT_TEST_BASE_URL` (set by `devServerTarget`) or other base URL.
+
+```ts title="playwright.config.ts"
+  // ...
+  projects: [
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'], baseURL: process.env['PLAYWRIGHT_TEST_BASE_URL'] },
+    },
+
+    {
+      name: 'firefox',
+      use: { ...devices['Desktop Firefox'], baseURL: 'http://example.com' },
+    },
+  ]
+```
+
 ## Create a test file
 
 Create a new empty test

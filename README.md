@@ -27,7 +27,7 @@ Some command-line interface options are available; such as UI mode
 ng e2e --ui
 ```
 
-For a list of accepted arguments, use `ng --help`. If you need more options and control on the CLI, the best solution is to use `npx playwright test` directly.
+For a list of accepted arguments, use `ng e2e --help`. If you need more options and control on the CLI, the best solution is to use `npx playwright test` directly.
 
 ## Create a test file
 

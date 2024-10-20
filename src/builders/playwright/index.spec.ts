@@ -1,6 +1,11 @@
 import { spawn } from 'node:child_process';
 import { join } from 'node:path';
 import { Architect } from '@angular-devkit/architect';
+import {
+  type BuilderOutput,
+  createBuilder,
+  targetFromTargetString,
+} from '@angular-devkit/architect';
 import { TestingArchitectHost } from '@angular-devkit/architect/testing';
 
 jest.mock('node:child_process');
@@ -10,8 +15,15 @@ describe('Playwright builder', () => {
 
   beforeEach(async () => {
     const architectHost = new TestingArchitectHost();
-    await architectHost.addBuilderFromPackage(join(__dirname, '../../..'));
     architect = new Architect(architectHost);
+    await architectHost.addBuilderFromPackage(join(__dirname, '../../..'));
+
+    // Builder that mocks `ng run app:serve`
+    const fakeBuilder = (): BuilderOutput => {
+      return { success: true, baseUrl: 'https://example.com' };
+    };
+    architectHost.addBuilder('fakeBuilder', createBuilder(fakeBuilder));
+    architectHost.addTarget(targetFromTargetString('app:serve'), 'fakeBuilder');
 
     (spawn as jest.Mock).mockReturnValue({
       on: jest.fn((event, callback) => callback(0)),
@@ -31,6 +43,26 @@ describe('Playwright builder', () => {
       'npx playwright test',
       [],
       expect.anything(),
+    );
+  });
+
+  it('should spawn testing process and Angular server', async () => {
+    const run = await architect.scheduleBuilder(
+      'playwright-ng-schematics:playwright',
+      {
+        devServerTarget: 'app:serve',
+      },
+    );
+    await run.stop();
+    const output = await run.result;
+
+    expect(output.success).toBeTruthy();
+    expect(spawn).toHaveBeenCalledWith(
+      'npx playwright test',
+      [],
+      expect.objectContaining({
+        env: { PLAYWRIGHT_TEST_BASE_URL: 'https://example.com' },
+      }),
     );
   });
 

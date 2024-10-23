@@ -61,7 +61,9 @@ describe('Playwright builder', () => {
       'npx playwright test',
       [],
       expect.objectContaining({
-        env: { PLAYWRIGHT_TEST_BASE_URL: 'https://example.com' },
+        env: expect.objectContaining({
+          PLAYWRIGHT_TEST_BASE_URL: 'https://example.com',
+        }),
       }),
     );
   });

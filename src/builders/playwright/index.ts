@@ -47,10 +47,11 @@ async function startPlaywrightTest(options: Options, baseURL: string) {
   // PLAYWRIGHT_TEST_BASE_URL is actually a non-documented env variable used
   // by Playwright Test.
   // Its usage in playwright.config.ts is to clarify that it can be overriden.
-  let env = {};
+  let env = process.env;
   if (baseURL) {
     env = {
       PLAYWRIGHT_TEST_BASE_URL: baseURL,
+      ...process.env,
     };
   }
 

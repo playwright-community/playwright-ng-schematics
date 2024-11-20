@@ -30,6 +30,10 @@ describe('Playwright builder', () => {
     });
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('should spawn testing process', async () => {
     const run = await architect.scheduleBuilder(
       'playwright-ng-schematics:playwright',
@@ -94,6 +98,50 @@ describe('Playwright builder', () => {
     expect(spawn).toHaveBeenCalledWith(
       'npx playwright test',
       ['--ui'],
+      expect.anything(),
+    );
+    expect(output.success).toBeTruthy();
+  });
+
+  it('should accept unknown options', async () => {
+    const run = await architect.scheduleBuilder(
+      'playwright-ng-schematics:playwright',
+      {
+        test1: 'testValue',
+        test2: 2,
+        test3: true,
+        test4: [],
+        test5: {},
+        test6: null,
+        a: 'yes',
+        b: true,
+      },
+    );
+    await run.stop();
+    const output = await run.result;
+
+    expect(spawn).toHaveBeenCalledWith(
+      'npx playwright test',
+      ['--test1', 'testValue', '--test2', '2', '--test3', '-a', 'yes', '-b'],
+      expect.anything(),
+    );
+    expect(output.success).toBeTruthy();
+  });
+
+  it('should accept --files option', async () => {
+    const run = await architect.scheduleBuilder(
+      'playwright-ng-schematics:playwright',
+      {
+        'fail-on-flaky-tests': true,
+        files: ['tests/todo-page/', 'tests/landing-page/'],
+      },
+    );
+    await run.stop();
+    const output = await run.result;
+
+    expect(spawn).toHaveBeenCalledWith(
+      'npx playwright test',
+      ['tests/todo-page/', 'tests/landing-page/', '--fail-on-flaky-tests'],
       expect.anything(),
     );
     expect(output.success).toBeTruthy();

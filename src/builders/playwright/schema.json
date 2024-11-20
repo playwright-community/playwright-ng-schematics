@@ -8,12 +8,118 @@
       "description": "Dev server target to run tests against",
       "type": "string"
     },
+    "files": {
+      "description": "Run a test file with the given file name or in the given directory. To specify multiple names, repeat this argument.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+
+    "config": {
+      "description": "Configuration file. If not passed, defaults to `playwright.config.ts` or `playwright.config.js` in the current directory.",
+      "type": "string"
+    },
     "debug": {
-      "description": "Run tests with Playwright Inspector",
+      "description": "Run tests with Playwright Inspector. Shortcut for `PWDEBUG=1` environment variable and `--timeout=0 --max-failures=1 --headed --workers=1` options.",
       "type": "boolean"
     },
+    "fail-on-flaky-tests": {
+      "description": "Fails test runs that contain flaky tests. By default flaky tests count as successes.",
+      "type": "boolean"
+    },
+    "forbid-only": {
+      "description": "Whether to disallow `test.only`. Useful on CI.",
+      "type": "boolean"
+    },
+    "global-timeout": {
+      "description": "Total timeout for the whole test run in milliseconds. By default, there is no global timeout.",
+      "type": "number"
+    },
+    "grep": {
+      "description": "Only run tests matching this regular expression.",
+      "type": "string",
+      "alias": "g"
+    },
+    "grep-invert": {
+      "description": "Only run tests not matching this regular expression. The opposite of `--grep`. The filter does not apply to the tests from dependency projects, i.e. Playwright will still run all tests from project dependencies.",
+      "type": "string"
+    },
+    "headed": {
+      "description": "Run tests in headed browsers. Useful for debugging.",
+      "type": "boolean"
+    },
+    "ignore-snapshots": {
+      "description": "Whether to ignore snapshots. Use this when snapshot expectations are known to be different, e.g. running tests on Linux against Windows screenshots.",
+      "type": "boolean"
+    },
+    "last-failed": {
+      "description": "Only re-run the failures.",
+      "type": "boolean"
+    },
+    "list": {
+      "description": "List all the tests, but do not run them.",
+      "type": "boolean"
+    },
+    "max-failures": {
+      "description": "Stop after the first `N` test failures.",
+      "type": "number"
+    },
+    "x": {
+      "description": "Stop after the first failure.",
+      "type": "boolean"
+    },
+    "no-deps": {
+      "description": "Ignore the dependencies between projects and behave as if they were not specified.",
+      "type": "boolean"
+    },
+    "output": {
+      "description": "Directory for artifacts produced by tests.",
+      "type": "string",
+      "default": "test-results"
+    },
+    "only-changed": {
+      "description": "Only run test files that have been changed between working tree and \"ref\". Defaults to running all uncommitted changes with ref=HEAD. Only supports Git.",
+      "type": "string"
+    },
+    "pass-with-no-tests": {
+      "description": "Allows the test suite to pass when no files are found.",
+      "type": "boolean"
+    },
+    "project": {
+      "description": "Only run tests from the specified projects, supports '*' wildcard. Defaults to running all projects defined in the configuration file.",
+      "type": "string"
+    },
+    "quiet": {
+      "description": "Whether to suppress stdout and stderr from the tests.",
+      "type": "boolean"
+    },
+    "repeat-each": {
+      "description": "Run each test `N` times.",
+      "type": "number",
+      "default": 1
+    },
+    "reporter": {
+      "description": "Choose a reporter: minimalist `dot`, concise `line` or detailed `list`.",
+      "enum": ["dot", "line", "list"]
+    },
+    "retries": {
+      "description": "The maximum number of retries for flaky tests, defaults to zero (no retries).",
+      "type": "number",
+      "default": 0
+    },
+    "shard": {
+      "description": "Shard tests and execute only selected shard, specified in the form `current/all`, 1-based, for example `3/5`.",
+      "type": "string",
+      "pattern": "^\\d+\\/\\d+$"
+    },
+    "timeout": {
+      "description": "Maximum timeout in milliseconds for each test.",
+      "type": "number",
+      "default": 30000
+    },
     "trace": {
-      "description": "Force tracing mode",
+      "description": "Force tracing mode, can be `on`, `off`, `on-first-retry`, `on-all-retries`, `retain-on-failure`",
       "enum": [
         "on",
         "off",
@@ -23,13 +129,23 @@
         "retain-on-first-failure"
       ]
     },
-    "u": {
-      "description": "Update snapshots with actual results",
-      "type": "boolean"
+    "tsconfig": {
+      "description": "Path to a single tsconfig applicable to all imported files.",
+      "type": "string"
     },
     "ui": {
-      "description": "Run tests in interactive UI mode",
+      "description": "Run tests in interactive UI mode, with a built-in watch mode.",
       "type": "boolean"
+    },
+    "update-snapshots": {
+      "description": "Whether to update snapshots with actual results instead of comparing them. Use this when snapshot expectations have changed.",
+      "type": "boolean",
+      "alias": "u"
+    },
+    "workers": {
+      "description": "The maximum number of concurrent worker processes that run in parallel.",
+      "type": "number",
+      "alias": "j"
     }
   }
 }

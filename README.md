@@ -26,12 +26,18 @@ You can also use the Angular CLI `ng` to run your tests
 ng e2e
 ```
 
-Some command-line interface options are available; such as UI mode
+You can use almost the same command-line interface options that exist for Playwright (see [Playwright Docs](https://playwright.dev/docs/test-cli) or use `ng e2e --help`), such as UI mode
 ```bash
 ng e2e --ui
+# or
+npm run e2e -- --ui
 ```
 
-For a list of accepted arguments, use `ng e2e --help`. If you need more options and control on the CLI, the best solution is to use `npx playwright test` directly.
+To specify particular test files, usually done like this `npx playwright test tests/todo-page/ tests/landing-page/`, you have to prepend the `--files` argument.
+```bash
+ng e2e --files tests/todo-page/ --files tests/landing-page/
+```
+The `-c` option is used to choose an Angular configuration. If you also want to specify a Playwright configuration, use `--config` instead.
 
 ### Start an Angular development server
 

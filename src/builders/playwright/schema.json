@@ -74,9 +74,8 @@
       "type": "boolean"
     },
     "output": {
-      "description": "Directory for artifacts produced by tests.",
-      "type": "string",
-      "default": "test-results"
+      "description": "Directory for artifacts produced by tests, defaults to `test-results`.",
+      "type": "string"
     },
     "only-changed": {
       "description": "Only run test files that have been changed between working tree and \"ref\". Defaults to running all uncommitted changes with ref=HEAD. Only supports Git.",
@@ -95,9 +94,8 @@
       "type": "boolean"
     },
     "repeat-each": {
-      "description": "Run each test `N` times.",
-      "type": "number",
-      "default": 1
+      "description": "Run each test `N` times, defaults to one.",
+      "type": "number"
     },
     "reporter": {
       "description": "Choose a reporter: minimalist `dot`, concise `line` or detailed `list`.",
@@ -105,8 +103,7 @@
     },
     "retries": {
       "description": "The maximum number of retries for flaky tests, defaults to zero (no retries).",
-      "type": "number",
-      "default": 0
+      "type": "number"
     },
     "shard": {
       "description": "Shard tests and execute only selected shard, specified in the form `current/all`, 1-based, for example `3/5`.",
@@ -114,9 +111,8 @@
       "pattern": "^\\d+\\/\\d+$"
     },
     "timeout": {
-      "description": "Maximum timeout in milliseconds for each test.",
-      "type": "number",
-      "default": 30000
+      "description": "Maximum timeout in milliseconds for each test, defaults to 30 seconds.",
+      "type": "number"
     },
     "trace": {
       "description": "Force tracing mode, can be `on`, `off`, `on-first-retry`, `on-all-retries`, `retain-on-failure`",

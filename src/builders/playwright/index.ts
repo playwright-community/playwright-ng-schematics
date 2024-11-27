@@ -37,8 +37,11 @@ function buildArgs(options: JsonObject): string[] {
         return [];
       }
 
+      // options automatically got converted to camelCase, so we have to convert them back to kebab-case for Playwright.
+      const kebabCaseKey = camelCaseToKebabCase(key);
+
       const dashes = key.length === 1 ? '-' : '--';
-      const argument = `${dashes}${key}`;
+      const argument = `${dashes}${kebabCaseKey}`;
 
       if (typeof value === 'boolean') {
         if (value) {
@@ -49,6 +52,14 @@ function buildArgs(options: JsonObject): string[] {
       return [argument, String(value)];
     }),
   ];
+}
+
+function camelCaseToKebabCase(text: string): string {
+  // Source: https://stackoverflow.com/a/67243723
+  return text.replace(
+    /[A-Z]+(?![a-z])|[A-Z]/g,
+    (match, offset) => (offset ? '-' : '') + match.toLowerCase(),
+  );
 }
 
 async function startDevServer(

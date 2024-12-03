@@ -146,4 +146,20 @@ describe('Playwright builder', () => {
     );
     expect(output.success).toBeTruthy();
   });
+
+  it('should convert camelCase options to kebab-case', async () => {
+    const run = await architect.scheduleBuilder(
+      'playwright-ng-schematics:playwright',
+      { updateSnapshots: true },
+    );
+    await run.stop();
+    const output = await run.result;
+
+    expect(spawn).toHaveBeenCalledWith(
+      'npx playwright test',
+      ['--update-snapshots'],
+      expect.anything(),
+    );
+    expect(output.success).toBeTruthy();
+  });
 });

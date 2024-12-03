@@ -7,6 +7,7 @@ import {
   targetFromTargetString,
 } from '@angular-devkit/architect';
 import type { JsonObject } from '@angular-devkit/core';
+import { dasherize } from '@angular-devkit/core/src/utils/strings';
 
 /**
  * Converts the options object back to an argv string array.
@@ -38,10 +39,8 @@ function buildArgs(options: JsonObject): string[] {
       }
 
       // options automatically got converted to camelCase, so we have to convert them back to kebab-case for Playwright.
-      const kebabCaseKey = camelCaseToKebabCase(key);
-
       const dashes = key.length === 1 ? '-' : '--';
-      const argument = `${dashes}${kebabCaseKey}`;
+      const argument = `${dashes}${dasherize(key)}`;
 
       if (typeof value === 'boolean') {
         if (value) {
@@ -52,14 +51,6 @@ function buildArgs(options: JsonObject): string[] {
       return [argument, String(value)];
     }),
   ];
-}
-
-function camelCaseToKebabCase(text: string): string {
-  // Source: https://stackoverflow.com/a/67243723
-  return text.replace(
-    /[A-Z]+(?![a-z])|[A-Z]/g,
-    (match, offset) => (offset ? '-' : '') + match.toLowerCase(),
-  );
 }
 
 async function startDevServer(

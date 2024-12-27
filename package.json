@@ -27,15 +27,15 @@
     "testing"
   ],
   "devDependencies": {
-    "@biomejs/biome": "^1.9.2",
+    "@biomejs/biome": "^1.9.4",
     "@schematics/angular": "18.0.7",
-    "@types/jest": "^29.5.13",
-    "@types/node": "^20.16.10",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20.17.10",
     "cpy-cli": "^5.0.0",
     "jest": "^29.7.0",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
-    "typescript": "^5.6.2"
+    "typescript": "^5.7.2"
   },
   "dependencies": {
     "@angular-devkit/architect": "0.1800.6",

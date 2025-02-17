@@ -7,7 +7,7 @@ Adds [Playwright Test](https://playwright.dev/) to your Angular project
 
 ## Installation
 
-Run the following to add Playwright to your Angular project
+Run the following to add Playwright to your Angular project. `ng add` will pick the correct version of this schematic automatically
 ```bash
 ng add playwright-ng-schematics
 ```
@@ -16,6 +16,10 @@ Once installed, you can run the tests
 ```bash
 npm run e2e
 ```
+
+## Requirements
+
+Angular 18. (versions before 1.3.0 will install, and might work, with previous version of Angular)
 
 ## Usage
 

@@ -19,7 +19,7 @@ npm run e2e
 
 ## Requirements
 
-Angular 18. (versions before 1.3.0 will install, and might work, with previous version of Angular)
+Angular 18+
 
 ## Usage
 

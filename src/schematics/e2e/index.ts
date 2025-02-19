@@ -1,4 +1,4 @@
-import { classify, dasherize } from '@angular-devkit/core/src/utils/strings';
+import { strings } from '@angular-devkit/core';
 import {
   url,
   type Rule,
@@ -14,10 +14,13 @@ import {
 // You don't have to export the function as default. You can also have more than one rule factory
 // per file.
 export default function e2e(options: { name: string }): Rule {
-  const name = options.name;
   return (tree: Tree, _context: SchematicContext) => {
     const templateSource = apply(url('./files'), [
-      applyTemplates({ classify, name, dasherize }),
+      applyTemplates({
+        classify: strings.classify,
+        name: options.name,
+        dasherize: strings.dasherize,
+      }),
       move('e2e'),
     ]);
 

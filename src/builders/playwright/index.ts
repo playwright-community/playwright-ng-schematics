@@ -6,8 +6,7 @@ import {
   createBuilder,
   targetFromTargetString,
 } from '@angular-devkit/architect';
-import type { JsonObject } from '@angular-devkit/core';
-import { dasherize } from '@angular-devkit/core/src/utils/strings';
+import { type JsonObject, strings } from '@angular-devkit/core';
 
 /**
  * Converts the options object back to an argv string array.
@@ -40,7 +39,7 @@ function buildArgs(options: JsonObject): string[] {
 
       // options automatically got converted to camelCase, so we have to convert them back to kebab-case for Playwright.
       const dashes = key.length === 1 ? '-' : '--';
-      const argument = `${dashes}${dasherize(key)}`;
+      const argument = `${dashes}${strings.dasherize(key)}`;
 
       if (typeof value === 'boolean') {
         if (value) {

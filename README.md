@@ -94,7 +94,14 @@ Create a new empty test
 ng generate playwright-ng-schematics:e2e "<TestName>"
 ```
 
-## Migrate from Protractor
+or with CLI prompt of the name
+```bash
+ng generate playwright-ng-schematics:e2e
+```
+
+## Migrating from Protractor
+
+Still using Protractor ?
 
 Read the [Migrating from Protractor](https://playwright.dev/docs/protractor) guide on the official Playwright website.
 

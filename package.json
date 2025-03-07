@@ -26,6 +26,11 @@
     "schematics",
     "testing"
   ],
+  "dependencies": {
+    "@angular-devkit/architect": ">= 0.1900.0 < 0.2000.0",
+    "@angular-devkit/core": "^19.0.0",
+    "@angular-devkit/schematics": "^19.0.0"
+  },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@schematics/angular": "^19.0.0",

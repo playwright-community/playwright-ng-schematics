@@ -5,6 +5,13 @@
 
 Adds [Playwright Test](https://playwright.dev/) to your Angular project 
 
+- Installs Playwright Test
+- Set up `ng e2e` for you
+- Adds configuration to `angular.json` for easy integration into your existing project
+- `ng generate` e2e tests
+
+<img src="docs/playwright-schematics.gif" alt="demo of ng e2e installing Playwright, then running end-to-end tests" width="800"/>
+
 ## Installation
 
 Run the following to add Playwright to your Angular project. `ng add` will pick the correct version of this schematic automatically

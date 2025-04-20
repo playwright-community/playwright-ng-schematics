@@ -59,6 +59,7 @@ describe('ng-add', () => {
     const tree = await runner.runSchematic('ng-add', {}, appTree);
 
     expect(tree.files).toContain('/playwright.config.ts');
+    expect(tree.files).toContain('/e2e/tsconfig.json');
     expect(tree.files).toContain('/e2e/example.spec.ts');
 
     const packageJSON = JSON.parse(tree.readContent('/package.json'));
